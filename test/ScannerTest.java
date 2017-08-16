@@ -95,9 +95,9 @@ public class ScannerTest {
         scanner. next();
         assertTrue(scanner.tok==Scanner.OR_TOK);
         scanner. next();
-        assertTrue(scanner.tok==Scanner.COLON_TOK);
-        scanner.  next();
         assertTrue(scanner.tok==Scanner.NOT_TOK);
+        scanner.  next();
+        assertTrue(scanner.tok==Scanner.COLON_TOK);
         scanner.  next();
         assertTrue(scanner.tok==Scanner.EOF);
     }

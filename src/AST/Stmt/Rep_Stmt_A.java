@@ -18,7 +18,7 @@ public class Rep_Stmt_A extends AST{
     @Override
     public String toString() {
         if (rep_stmt_a != null){
-            return stmt.toString() + " " + rep_stmt_a;
+            return stmt.toString() + "" + rep_stmt_a;
         }
         return stmt.toString();
     }

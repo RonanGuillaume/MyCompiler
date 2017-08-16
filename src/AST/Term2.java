@@ -19,6 +19,10 @@ public class Term2 extends AST{
 
     @Override
     public String toString() {
-        return "" + op2 + " (" + factor+" "+term2 + ")";
+        String result = "" + op2 + "(" + factor;
+        if (term2 != null){
+            result += term2;
+        }
+        return result+")";
     }
 }

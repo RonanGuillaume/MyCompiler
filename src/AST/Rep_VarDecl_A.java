@@ -17,7 +17,7 @@ public class Rep_VarDecl_A extends AST{
     public String toString() {
         String result = varDecl.toString();
         if (rep_varDecl_a != null){
-            result += " " + rep_varDecl_a;
+            result += "" + rep_varDecl_a;
         }
         return result;
     }

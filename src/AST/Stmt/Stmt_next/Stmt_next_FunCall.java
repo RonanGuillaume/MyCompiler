@@ -13,6 +13,6 @@ public class Stmt_next_FunCall extends Stmt_next {
 
     @Override
     public String toString() {
-        return funCall_without_id.toString() + ";";
+        return funCall_without_id.toString() + ";\n";
     }
 }

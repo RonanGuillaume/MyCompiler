@@ -17,10 +17,10 @@ public class Stmt_while extends Stmt {
 
     @Override
     public String toString() {
-        String result = "while (" + exp + "){";
+        String result = "while (" + exp + "){\n";
         if (rep_stmt_a != null){
             result += rep_stmt_a;
         }
-        return result + "}";
+        return result + "}\n";
     }
 }

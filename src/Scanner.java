@@ -307,6 +307,10 @@ public class Scanner {
         return new ParseError(msg + " but found " + this);
     }
 
+    public void pushBack(){
+        streamTokenizer.pushBack();
+    }
+
     @Override
     public String toString() {
         switch (tok){
@@ -314,7 +318,7 @@ public class Scanner {
             case EOF:
                 return "<EOF>";
             default:
-                return ""+(char)tok;
+                return ""+streamTokenizer;
         }
     }
 }

@@ -19,10 +19,11 @@ public class Stmt_if extends Stmt {
 
     @Override
     public String toString() {
-        String result = "if (" + exp + "){";
+        String result = "if (" + exp + "){\n";
         if (rep_stmt_a != null){
             result += rep_stmt_a;
         }
+        result += "}\n";
         if (else_stmt_a != null){
             result += else_stmt_a;
         }

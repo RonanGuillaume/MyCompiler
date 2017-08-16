@@ -19,6 +19,6 @@ public class FunDecl_type extends FunDecl_ {
 
     @Override
     public String toString() {
-        return "" + type_no_id + " " + id + " = " + exp + ";";
+        return "" + type_no_id + " " + id + " = " + exp + ";\n";
     }
 }

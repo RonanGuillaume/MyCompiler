@@ -15,6 +15,6 @@ public class Else_Stmt_A extends AST{
 
     @Override
     public String toString() {
-        return "else {" + rep_stmt_a + "}";
+        return "else {\n" + rep_stmt_a + "}\n";
     }
 }

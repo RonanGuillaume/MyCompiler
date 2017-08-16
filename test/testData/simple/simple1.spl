@@ -20,7 +20,6 @@ hej(x) {
     return 2+5*x+y;
 }
 main() {
-    var c = 'b';
     hej(5);
     hej2(2);
 }

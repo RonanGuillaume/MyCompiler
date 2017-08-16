@@ -18,6 +18,10 @@ public class Stmt_next_Field_A extends Stmt_next {
 
     @Override
     public String toString() {
-        return field_a.toString() + " = " + exp + ";";
+        String result = "";
+        if (field_a != null){
+            result+=field_a;
+        }
+        return result + " = " + exp + ";\n";
     }
 }

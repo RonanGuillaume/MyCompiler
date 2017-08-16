@@ -32,13 +32,14 @@ public class FunDecl2_args extends FunDecl2 {
         if (funType_op_a != null){
             result += funType_op_a;
         }
-        result += "{";
+        result += "{\n";
         if (rep_varDecl_a != null){
-            result += rep_varDecl_a + " ";
+            result += rep_varDecl_a + "";
         }
+        result += stmt;
         if (rep_stmt_a != null){
             result += rep_stmt_a;
         }
-        return result + "}";
+        return result + "}\n";
     }
 }

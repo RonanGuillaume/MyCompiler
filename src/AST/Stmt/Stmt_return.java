@@ -17,6 +17,6 @@ public class Stmt_return extends Stmt {
         if (exp_op_a != null){
             result += " " + exp_op_a;
         }
-        return result + " ;";
+        return result + ";\n";
     }
 }

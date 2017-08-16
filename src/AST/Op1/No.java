@@ -10,6 +10,6 @@ public class No extends Op1 {
 
     @Override
     public String toString() {
-        return "!";
+        return " !";
     }
 }
