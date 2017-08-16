@@ -34,9 +34,8 @@ public class FunDecl2_args extends FunDecl2 {
         }
         result += "{";
         if (rep_varDecl_a != null){
-            result += rep_varDecl_a;
+            result += rep_varDecl_a + " ";
         }
-        result += ";" + stmt;
         if (rep_stmt_a != null){
             result += rep_stmt_a;
         }

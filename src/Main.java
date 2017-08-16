@@ -1,8 +1,8 @@
 public class Main {
 
     public static void main(String[] args) {
-        Scanner ts = new Scanner("example1.zo");
+        Scanner ts = new Scanner("test/testData/simple/simple1.spl");
         Parser p = new Parser(ts);
-        p.parse();
+        System.out.println(p.parse());
     }
 }
