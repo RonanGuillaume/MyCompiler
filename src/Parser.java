@@ -635,7 +635,25 @@ public class Parser {
             throw scanner.parseError("Expected a '('");
         }
         scanner.next();
-        return new Factor_Exp(Exp());
+        Exp exp = Exp();
+        Exp_next exp_next = Exp_next();
+        if (scanner.tok != Scanner.R_PAR_TOK){
+            throw scanner.parseError("Expected a ')'");
+        }
+        scanner.next();
+        return new Factor_Exp(exp, exp_next);
+    }
+
+    private Exp_next Exp_next(){
+        switch (scanner.tok){
+            case Scanner.COMMA_TOK:
+                scanner.next();
+                return new Exp_next(Exp());
+            case Scanner.R_PAR_TOK:
+                return null;
+            default:
+                throw scanner.parseError("Expected , or )");
+        }
     }
 
     private Exp_Type Factor_Exp_Type(){
