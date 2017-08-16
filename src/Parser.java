@@ -9,12 +9,6 @@ import AST.Op2.*;
 import AST.Stmt.*;
 import AST.Stmt.Stmt_next.*;
 import AST.Type.*;
-import AST.Type_no_id.Type_No_id;
-import AST.Type_no_id.Type_No_id_List;
-import AST.Type_no_id.Type_No_id_Pair;
-import AST.Type_no_id.Type_No_id_basic;
-
-import java.lang.reflect.Field;
 
 /**
  * Created by ronan
@@ -77,7 +71,7 @@ public class Parser {
     }
 
     private FunDecl_type FunDecl_type(){
-        Type_No_id type_no_id = Type_No_id();
+        Type type_no_id = Type();
         if (scanner.tok != Scanner.NAME){
             throw scanner.parseError("Expected an id");
         }
@@ -779,56 +773,6 @@ public class Parser {
             default:
                 throw scanner.parseError("Expected a (, [, an id, 'Int', 'Bool' or 'Void'");
         }
-    }
-
-    private Type_No_id Type_No_id(){
-        switch (scanner.tok){
-            case Scanner.L_SQ_BRACKET_TOK:
-                return Type_No_id_List();
-            case Scanner.L_PAR_TOK:
-                return Type_No_id_Pair();
-            case Scanner.INT:
-            case Scanner.BOOL:
-                return Type_No_id_basic();
-            default:
-                throw scanner.parseError("Expected a (, [, Int or Boll");
-        }
-    }
-
-    private Type_No_id_basic Type_No_id_basic(){
-        switch (scanner.tok){
-            case Scanner.INT:
-                return new Type_No_id_basic(new Int());
-            case Scanner.BOOL:
-                return new Type_No_id_basic(new Bool());
-            default:
-                throw scanner.parseError("Expected a 'Int' or 'Bool'");
-        }
-    }
-
-    private Type_No_id_Pair Type_No_id_Pair() {
-        scanner.next();
-        Type type1 = Type();
-        if (scanner.tok != Scanner.COMMA_TOK){
-            throw scanner.parseError("Expected a ,");
-        }
-        scanner.next();
-        Type type2 = Type();
-        if (scanner.tok != Scanner.R_PAR_TOK){
-            throw scanner.parseError("Expected a )");
-        }
-        scanner.next();
-        return new Type_No_id_Pair(type1, type2);
-    }
-
-    private Type_No_id_List Type_No_id_List() {
-        scanner.next();
-        Type type = Type();
-        if (scanner.tok != Scanner.R_SQ_BRACKET_TOK){
-            throw scanner.parseError("Expected a ]");
-        }
-        scanner.next();
-        return new Type_No_id_List(type);
     }
 
     private Type Type(){
