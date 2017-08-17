@@ -604,7 +604,7 @@ public class Parser {
             case Scanner.DOUBLE:
             case Scanner.FALSE:
             case Scanner.TRUE:
-            case Scanner.L_SQ_BRACKET_TOK:
+            case Scanner.EMPTY_LIST_TOK:
                 return Factor_Exp_Type();
             default:
                 throw scanner.parseError("Expected var, id, (, [, Int or Bool");
@@ -672,11 +672,7 @@ public class Parser {
             case Scanner.TRUE:
                 scanner.next();
                 return new Exp_Type_True();
-            case Scanner.L_SQ_BRACKET_TOK:
-                scanner.next();
-                if (scanner.tok != Scanner.R_SQ_BRACKET_TOK){
-                    throw scanner.parseError("Expected a ']'");
-                }
+            case Scanner.EMPTY_LIST_TOK:
                 scanner.next();
                 return new Exp_Type_List();
             default:
