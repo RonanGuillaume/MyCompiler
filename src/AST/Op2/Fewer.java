@@ -5,11 +5,21 @@ package AST.Op2;
  * on 03/08/2017.
  */
 public class Fewer extends Op2 {
-    public Fewer() {
+    private Eq_A eq_a;
+
+    public Fewer(Eq_A eq_a) {
+        this.eq_a = eq_a;
     }
 
     @Override
     public String toString() {
-        return " < ";
+        String result = " <";
+        if (eq_a != null){
+            result += "= ";
+        }
+        else{
+            result += " ";
+        }
+        return result;
     }
 }

@@ -375,7 +375,7 @@ public class Parser {
         }
         String idValue = scanner.sval;
         scanner.next();
-        if (scanner.tok != Scanner.EQ_TOK){
+        if (scanner.tok != Scanner.ASSIGN_TOK){
             throw scanner.parseError("Expected an '='");
         }
         Exp exp = Exp();
@@ -511,12 +511,9 @@ public class Parser {
             case Scanner.TIMES_TOK:
             case Scanner.DIV_TOK:
             case Scanner.MOD_TOK:
-            case Scanner.EQ_TOK:
-            case Scanner.LE_TOK:
+            case Scanner.ASSIGN_TOK:
             case Scanner.LT_TOK:
-            case Scanner.GE_TOK:
             case Scanner.GT_TOK:
-            case Scanner.NE_TOK:
             case Scanner.AND_TOK:
             case Scanner.OR_TOK:
             case Scanner.COLON_TOK:
@@ -560,22 +557,24 @@ public class Parser {
             case Scanner.MOD_TOK:
                 scanner.next();
                 return new Module();
-            case Scanner.EQ_TOK:
+            case Scanner.ASSIGN_TOK:
+                scanner.next();
+                if (scanner.tok != Scanner.ASSIGN_TOK){
+                    throw scanner.parseError("Expected ==");
+                }
                 scanner.next();
                 return new Equal();
-            case Scanner.LE_TOK:
-                scanner.next();
-                return new Fewer_equal();
             case Scanner.LT_TOK:
                 scanner.next();
-                return new Fewer();
-            case Scanner.GE_TOK:
-                scanner.next();
-                return new Higher_equal();
+                return new Fewer(Eq_A());
             case Scanner.GT_TOK:
                 scanner.next();
-                return new Higher();
-            case Scanner.NE_TOK:
+                return new Higher(Eq_A());
+            case Scanner.NOT_TOK:
+                scanner.next();
+                if (scanner.tok != Scanner.ASSIGN_TOK){
+                    throw scanner.parseError("Expected !=");
+                }
                 scanner.next();
                 return new Diff();
             case Scanner.AND_TOK:
@@ -592,6 +591,17 @@ public class Parser {
         }
     }
 
+    private Eq_A Eq_A(){
+        switch (scanner.tok){
+            case Scanner.ASSIGN_TOK:
+                return new Eq_A();
+            case Scanner.L_PAR_TOK:
+                return null;
+            default:
+                throw scanner.parseError("Expected = or (");
+        }
+    }
+
     private Factor Factor(){
         switch (scanner.tok){
             case Scanner.L_PAR_TOK:
@@ -604,7 +614,11 @@ public class Parser {
             case Scanner.DOUBLE:
             case Scanner.FALSE:
             case Scanner.TRUE:
-            case Scanner.EMPTY_LIST_TOK:
+            case Scanner.L_SQ_BRACKET_TOK:
+                scanner.next();
+                if (scanner.tok != Scanner.R_SQ_BRACKET_TOK){
+                    throw scanner.parseError("Expected an empty list []");
+                }
                 return Factor_Exp_Type();
             default:
                 throw scanner.parseError("Expected var, id, (, [, Int or Bool");
@@ -617,7 +631,7 @@ public class Parser {
             case Scanner.PLUS_TOK:
                 op1 = new Plus();
                 break;
-            case Scanner.NE_TOK:
+            case Scanner.NOT_TOK:
                 op1 = new No();
                 break;
             case Scanner.MINUS_TOK:
@@ -672,8 +686,11 @@ public class Parser {
             case Scanner.TRUE:
                 scanner.next();
                 return new Exp_Type_True();
-            case Scanner.EMPTY_LIST_TOK:
+            case Scanner.L_SQ_BRACKET_TOK:
                 scanner.next();
+                if (scanner.tok != Scanner.R_SQ_BRACKET_TOK){
+                    throw scanner.parseError("Expected an empty list []");
+                }
                 return new Exp_Type_List();
             default:
                 throw scanner.parseError("Expected an id, an integer, False, True or []");
@@ -685,10 +702,8 @@ public class Parser {
             case Scanner.DOT_TOK:
                 scanner.next();
                 return new Field_A(Field_Op(), Field_A());
-            case Scanner.EQ_TOK:
             case Scanner.L_PAR_TOK:
             case Scanner.PLUS_TOK:
-            case Scanner.NE_TOK:
             case Scanner.MINUS_TOK:
             case Scanner.NAME:
             case Scanner.DOUBLE:
@@ -699,9 +714,7 @@ public class Parser {
             case Scanner.DIV_TOK:
             case Scanner.MOD_TOK:
             case Scanner.ASSIGN_TOK:
-            case Scanner.GE_TOK:
             case Scanner.GT_TOK:
-            case Scanner.LE_TOK:
             case Scanner.LT_TOK:
             case Scanner.NOT_TOK:
             case Scanner.AND_TOK:
@@ -738,7 +751,11 @@ public class Parser {
 
     private FunType_Op_A FunType_Op_A(){
         switch (scanner.tok){
-            case Scanner.OF_TYPE_TOK:
+            case Scanner.COLON_TOK:
+                scanner.next();
+                if (scanner.tok != Scanner.COLON_TOK){
+                    throw scanner.parseError("Expected ::");
+                }
                 scanner.next();
                 return new FunType_Op_A(FunType());
             case Scanner.L_BRACKET_TOK:
@@ -750,7 +767,11 @@ public class Parser {
 
     private FunType FunType(){
         Rep_FTypes_A rep_fTypes_a = Rep_FTypes_A();
-        if (scanner.tok != Scanner.ARROW_TOK){
+        if (scanner.tok != Scanner.MINUS_TOK){
+            throw scanner.parseError("Expected a ->");
+        }
+        scanner.next();
+        if (scanner.tok != Scanner.GT_TOK){
             throw scanner.parseError("Expected a ->");
         }
         scanner.next();
@@ -766,7 +787,7 @@ public class Parser {
             case Scanner.INT:
             case Scanner.BOOL:
                 return new Rep_FTypes_A(Type(), Rep_FTypes_A());
-            case Scanner.ARROW_TOK:
+            case Scanner.MINUS_TOK:
                 return null;
             default:
                 throw scanner.parseError("Expected a (, [, an id, 'Int', 'Bool' or a ->");

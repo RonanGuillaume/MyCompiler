@@ -14,7 +14,6 @@ public class Scanner {
     final static int WHILE = -102;
     final static int INT = -103;
     final static int BOOL = -104;
-    final static int CHAR = -105;
     final static int VOID = -106;
     final static int ELSE = -107;
     final static int RETURN = -108;
@@ -45,13 +44,6 @@ public class Scanner {
     final static int GT_TOK = -133;
     final static int COLON_TOK = -134;
     final static int NOT_TOK = -135;
-    final static int EQ_TOK = -136;
-    final static int EMPTY_LIST_TOK = -137;
-    final static int ARROW_TOK = -138;
-    final static int LE_TOK = -139;
-    final static int GE_TOK = -140;
-    final static int OF_TYPE_TOK = -141;
-    final static int NE_TOK = -142;
     final static int OR_TOK = -143;
     final static int AND_TOK = -144;
 
@@ -102,23 +94,13 @@ public class Scanner {
                                 break;
 
                             case  ("-"):
-                                tok = streamTokenizer.nextToken();
-                                if (tok == '>'){
-                                    tok = ARROW_TOK;
-                                }
-                                else {
-                                    streamTokenizer.pushBack();
-                                    tok = MINUS_TOK;
-                                }
+                                tok = MINUS_TOK;
                                 break;
                             case ("Int"):
                                 tok = INT;
                                 break;
                             case ("Bool"):
                                 tok = BOOL;
-                                break;
-                            case ("Char"):
-                                tok = CHAR;
                                 break;
                             case ("Void"):
                                 tok = VOID;
@@ -166,14 +148,7 @@ public class Scanner {
                         else if(!found) tok = NAME;
                         break;
                     case '=':
-                        tok = streamTokenizer.nextToken();
-                        if (tok == '='){
-                            tok = EQ_TOK;
-                        }
-                        else{
-                            streamTokenizer.pushBack();
-                            tok = ASSIGN_TOK;
-                        }
+                        tok = ASSIGN_TOK;
                         break;
                     case ';':
                         tok = SEMICOLON_TOK;
@@ -194,14 +169,7 @@ public class Scanner {
                         tok = COMMA_TOK;
                         break;
                     case '[':
-                        tok = streamTokenizer.nextToken();
-                        if (tok == ']'){
-                            tok = EMPTY_LIST_TOK;
-                        }
-                        else {
-                            streamTokenizer.pushBack();
-                            tok = L_SQ_BRACKET_TOK;
-                        }
+                        tok = L_SQ_BRACKET_TOK;
                         break;
                     case ']':
                         tok = R_SQ_BRACKET_TOK;
@@ -222,44 +190,16 @@ public class Scanner {
                         tok = MOD_TOK;
                         break;
                     case '<':
-                        tok = streamTokenizer.nextToken();
-                        if (tok == '='){
-                            tok = LE_TOK;
-                        }
-                        else {
-                            streamTokenizer.pushBack();
-                            tok = LT_TOK;
-                        }
+                        tok = LT_TOK;
                         break;
                     case '>':
-                        tok = streamTokenizer.nextToken();
-                        if (tok == '='){
-                            tok = GE_TOK;
-                        }
-                        else {
-                            streamTokenizer.pushBack();
-                            tok = GT_TOK;
-                        }
+                        tok = GT_TOK;
                         break;
                     case ':':
-                        tok = streamTokenizer.nextToken();
-                        if (tok == ':'){
-                            tok = OF_TYPE_TOK;
-                        }
-                        else {
-                            streamTokenizer.pushBack();
-                            tok = COLON_TOK;
-                        }
+                        tok = COLON_TOK;
                         break;
                     case '!':
-                        tok = streamTokenizer.nextToken();
-                        if (tok == '='){
-                            tok = NE_TOK;
-                        }
-                        else {
-                            streamTokenizer.pushBack();
-                            tok = NOT_TOK;
-                        }
+                        tok = NOT_TOK;
                         break;
                     case '|':
                         tok = streamTokenizer.nextToken();

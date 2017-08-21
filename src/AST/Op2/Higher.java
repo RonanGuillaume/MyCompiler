@@ -5,11 +5,21 @@ package AST.Op2;
  * on 03/08/2017.
  */
 public class Higher extends Op2 {
-    public Higher() {
+    private Eq_A eq_a;
+
+    public Higher(Eq_A eq_a) {
+        this.eq_a = eq_a;
     }
 
     @Override
     public String toString() {
-        return " > ";
+        String result = " >";
+        if (eq_a != null){
+            result += "= ";
+        }
+        else{
+            result += " ";
+        }
+        return result;
     }
 }

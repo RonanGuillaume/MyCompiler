@@ -9,6 +9,13 @@ import static org.junit.Assert.*;
 public class ParserTest {
     @Test
     public void parse() throws Exception {
+        parseWithArgs("test/3-ok/simpleArithmetic.spl");
+    }
+
+    private void parseWithArgs(String path){
+        Scanner ts = new Scanner(path);
+        Parser p = new Parser(ts);
+        System.out.println(p.parse());
     }
 
 }
