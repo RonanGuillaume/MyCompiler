@@ -517,10 +517,10 @@ public class Parser {
             case Scanner.AND_TOK:
             case Scanner.OR_TOK:
             case Scanner.COLON_TOK:
+            case Scanner.NOT_TOK:
                 return new Term2(Op2(), Factor(), Term2());
             case Scanner.R_PAR_TOK:
             case Scanner.PLUS_TOK:
-            case Scanner.NOT_TOK:
             case Scanner.MINUS_TOK:
             case Scanner.SEMICOLON_TOK:
             case Scanner.COMMA_TOK:
@@ -538,11 +538,8 @@ public class Parser {
             case Scanner.MINUS_TOK:
                 scanner.next();
                 return new Minus();
-            case Scanner.NOT_TOK:
-                scanner.next();
-                return new No();
             default:
-                throw scanner.parseError("Expected +, ! or -");
+                throw scanner.parseError("Expected + or -");
         }
     }
 
@@ -594,11 +591,19 @@ public class Parser {
     private Eq_A Eq_A(){
         switch (scanner.tok){
             case Scanner.ASSIGN_TOK:
+                scanner.next();
                 return new Eq_A();
             case Scanner.L_PAR_TOK:
+            case Scanner.PLUS_TOK:
+            case Scanner.MINUS_TOK:
+            case Scanner.NAME:
+            case Scanner.DOUBLE:
+            case Scanner.FALSE:
+            case Scanner.TRUE:
+            case Scanner.L_SQ_BRACKET_TOK:
                 return null;
             default:
-                throw scanner.parseError("Expected = or (");
+                throw scanner.parseError("Expected =, +, -, an id, a number, 'False', 'True', [ or (");
         }
     }
 
@@ -607,13 +612,13 @@ public class Parser {
             case Scanner.L_PAR_TOK:
                 return Factor_Exp();
             case Scanner.PLUS_TOK:
-            case Scanner.NOT_TOK:
             case Scanner.MINUS_TOK:
                 return Factor_op1();
             case Scanner.NAME:
             case Scanner.DOUBLE:
             case Scanner.FALSE:
             case Scanner.TRUE:
+                return Factor_Exp_Type();
             case Scanner.L_SQ_BRACKET_TOK:
                 scanner.next();
                 if (scanner.tok != Scanner.R_SQ_BRACKET_TOK){
