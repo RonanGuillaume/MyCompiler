@@ -624,6 +624,7 @@ public class Parser {
                 if (scanner.tok != Scanner.R_SQ_BRACKET_TOK){
                     throw scanner.parseError("Expected an empty list []");
                 }
+                scanner.next();
                 return Factor_Exp_Type();
             default:
                 throw scanner.parseError("Expected var, id, (, [, Int or Bool");
@@ -693,9 +694,6 @@ public class Parser {
                 return new Exp_Type_True();
             case Scanner.L_SQ_BRACKET_TOK:
                 scanner.next();
-                if (scanner.tok != Scanner.R_SQ_BRACKET_TOK){
-                    throw scanner.parseError("Expected an empty list []");
-                }
                 return new Exp_Type_List();
             default:
                 throw scanner.parseError("Expected an id, an integer, False, True or []");
@@ -839,8 +837,10 @@ public class Parser {
                 scanner.next();
                 return new Type_List(type);
             case Scanner.INT:
+                scanner.next();
                 return new Int();
             case Scanner.BOOL:
+                scanner.next();
                 return new Bool();
             default:
                 throw scanner.parseError("Expected a 'Int', 'Bool', ( or a [");

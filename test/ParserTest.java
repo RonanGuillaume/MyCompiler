@@ -10,6 +10,7 @@ public class ParserTest {
     @Test
     public void parse() throws Exception {
         parseWithArgs("test/3-ok/simpleArithmetic.spl");
+        parseWithArgs("test/3-ok/tuples.spl");
     }
 
     private void parseWithArgs(String path){
